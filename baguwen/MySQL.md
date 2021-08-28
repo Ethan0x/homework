@@ -9,6 +9,12 @@
 * 高性能B-tree索引：  http://mysql.taobao.org/monthly/2020/05/02/
 * 论B+树索引演进方向：http://mysql.taobao.org/monthly/2018/11/01/
 * 数据库故障恢复机制的前世今生：http://mysql.taobao.org/monthly/2019/01/01/
+### 关于LSM的一个同等引用：Fractal Tree
+* 一般B+Tree的插入过程分为两个部分：
+** Locate_position: 从root开始使用binary search方法递归地寻找应该插入到哪个子节点上，直到在leaf节点找到应该插入的位置然后返回；
+** Insert_into_postion: 在locate_position返回的位置进行插入操作，如果当前leaf节点存储的key个数超过预定义的最大值可能会引起split操作，最坏的情况是引起从leaf节点到root节点的split。
+* Fractal Tree把每个操作都看成一个message。每个internal节点维护了一个msg_buffer按照FIFO顺序缓存message；索引的有序序列是在leaf节点维护的。所谓采用“分期偿还”是指：在Fractal Tree中插入时，只需要把(key, value)对插入到root节点（或者若干深度的internal节点）的msg_buffer就可以返回了，这个过程可以简称为push_into_root。中间节点msg_buffer中的message是由后台工作线程分批地flush到子节点上，最终刷到leaf节点上的，这个过程简称为push_into_child。与Fractal Tree类似的面向磁盘I/O优化的数据结构还有Buffer Tree 论文链接 和Log Structured Merge Tree, 感兴趣的朋友可以看一下。
+
 ## 1. MySQL 索引使用有哪些注意事项呢？
 可以从三个维度回答这个问题：索引哪些情况会失效，索引不适合哪些场景，索引规则
 ### 索引哪些情况会失效

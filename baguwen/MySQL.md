@@ -2,7 +2,7 @@
 ## 0. 重要知识点内容：
 ### 一些经典文章：
 * B+树：MySQL数据库索引是如何实现的？：https://time.geekbang.org/column/article/77830
-* 为什么 MongoDB （索引）使用B-树而 Mysql 使用 B+树？：https://blog.csdn.net/wwh578867817/article/details/50493940
+* 为什么 MongoDB （索引）使用B-树而 Mysql 使用 B+树？：https://blog.csdn.net/wwh578867817/article/details/50493940   https://zhuanlan.zhihu.com/p/107228878
 * 数据库事务隔离发展历史： http://mysql.taobao.org/monthly/2018/10/06/
 * B-tree 物理结构的并发控制：http://mysql.taobao.org/monthly/2020/11/02/
 * B+树并发控制机制的前世今生：http://mysql.taobao.org/monthly/2018/09/01/

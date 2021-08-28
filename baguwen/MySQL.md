@@ -1,4 +1,14 @@
-# 100道mysql的面试题
+# MySQL重点知识内容：
+## 0. 重要知识点内容：
+### 一些经典文章：
+* B+树：MySQL数据库索引是如何实现的？：https://time.geekbang.org/column/article/77830
+* 为什么 MongoDB （索引）使用B-树而 Mysql 使用 B+树？：https://blog.csdn.net/wwh578867817/article/details/50493940
+* 数据库事务隔离发展历史： http://mysql.taobao.org/monthly/2018/10/06/
+* B-tree 物理结构的并发控制：http://mysql.taobao.org/monthly/2020/11/02/
+* B+树并发控制机制的前世今生：http://mysql.taobao.org/monthly/2018/09/01/
+* 高性能B-tree索引：  http://mysql.taobao.org/monthly/2020/05/02/
+* 论B+树索引演进方向：http://mysql.taobao.org/monthly/2018/11/01/
+* 数据库故障恢复机制的前世今生：http://mysql.taobao.org/monthly/2019/01/01/
 ## 1. MySQL 索引使用有哪些注意事项呢？
 可以从三个维度回答这个问题：索引哪些情况会失效，索引不适合哪些场景，索引规则
 ### 索引哪些情况会失效

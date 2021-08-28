@@ -15,11 +15,40 @@ class Solution {
                 }
                 int left = stack.peek();
                 int curWidth = i - left - 1;
-                int curHeight = Math.min(height[left], height[i] - height[top]);
+                int curHeight = Math.min(height[left], height[i]) - height[top];
                 ans += curHeight * curWidth;
             }
             stack.push(i);
         }
         return ans;
+    }
+}
+
+
+// O(n2)
+class Solution {
+    public int trap(int[] height) {
+        int sum = 0;
+        for (int i = 0; i < height.length; i++) {
+            int maxLeft = 0;
+            for (int j = i - 1; j >= 0; j--) {
+                if (height[j] > maxLeft) {
+                    maxLeft = height[j];
+                }
+            }
+
+            int maxRight = 0;
+            for (int k = i + 1; k < height.length; k++) {
+                if (height[k] > maxRight) {
+                    maxRight = height[k];
+                }
+            }
+
+            int min = Math.min(maxLeft, maxRight);
+            if (min > height[i]) {
+                sum = sum + (min - height[i]);
+            }
+        }
+        return sum;
     }
 }

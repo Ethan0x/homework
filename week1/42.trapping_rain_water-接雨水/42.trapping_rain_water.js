@@ -17,3 +17,32 @@ var trap = function(height) {
     }
     return ans;
 };
+
+// O(n2)
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+ var trap = function(height) {
+     let sum = 0;
+     for (let i = 0; i < height.length; i++) {
+         let maxL = 0;
+         for (let j = i - 1; j >= 0; j--){
+             if (maxL < height[j]) {
+                 maxL = height[j];
+             }
+         }
+         let maxR = 0;
+         for (let k = i + 1; k < height.length; k++) {
+             if (maxR < height[k]) {
+                 maxR = height[k];
+             }
+         }
+
+         let min = Math.min(maxL, maxR);
+         if (min > height[i]) {
+             sum = sum + min - height[i];
+         }
+     }
+     return sum;
+};

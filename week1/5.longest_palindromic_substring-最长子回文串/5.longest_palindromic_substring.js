@@ -1,5 +1,5 @@
 /**
- * @param {string} s
+ * @param {string} sl
  * @return {string}
  */
 var longestPalindrome = function (s) {

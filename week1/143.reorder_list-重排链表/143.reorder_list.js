@@ -44,7 +44,7 @@ var reverseList = function (head) {
     return prev;
 }
 
-var mergeList = function (l1, l2) {
+var mergeList = function(l1, l2) {
     let l1_tmp;
     let l2_tmp;
     while (l1 != null && l2 != null) {

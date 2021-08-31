@@ -1,3 +1,11 @@
+/**
+ * @param {number[]} nums1
+ * @param {number} m
+ * @param {number[]} nums2
+ * @param {number} n
+ * @return {void} Do not return anything, modify nums1 in-place instead.
+ */
+// 【58-88. 合并两个有序数组】
 var merge = function(nums1, m, nums2, n) {
     let p1 = m - 1, p2 = n - 1;
     let tail = m + n - 1;

@@ -125,7 +125,7 @@ SELECT a.* FROM employee a, (select id from employee where 条件 LIMIT 1000000,
 * 利用zookeeper生成唯一ID
 * MongoDB的ObjectId
 
-## 10. 事务的隔离级别有哪些？MySQL的默认隔离级别是什么？
+## 10. 事务的隔离级别有哪些？MySQL的默认隔离级别是什么？ (MVCC)
 * 读未提交（Read Uncommitted）
 * 读已提交（Read Committed）
 * 可重复读（Repeatable Read）
@@ -137,6 +137,28 @@ Mysql默认的事务隔离级别是可重复读(Repeatable Read)
 * 事务A、B交替执行，事务A被事务B干扰到了，因为事务A读取到事务B未提交的数据,这就是脏读
 * 在一个事务范围内，两个相同的查询，读取同一条记录，却返回了不同的数据，这就是不可重复读。
 * 事务A查询一个范围的结果集，另一个并发事务B往这个范围中插入/删除了数据，并静悄悄地提交，然后事务A再次查询相同的范围，两次读取得到的结果集不一样了，这就是幻读。
+
+Read Uncommitted（未提交读）
+在该隔离级别，所有事务都可以看到其他未提交事务的执行结果。读取未提交的数据，也被称之为脏读（Dirty Read）。该级别用的很少。
+
+Read Committed（提交读）
+这是大多数数据库系统的默认隔离级别（但不是MySQL默认的）。它满足了隔离的简单定义：一个事务只能看见已经提交事务所做的改变，换句话说就是事务提交之前对其余事务不可见。这种隔离级别也支持不可重复读（Nonrepeatable Read），因为同一事务的其他实例在该实例处理其间可能会有新的commit，所以同一select查询可能返回不同结果。
+
+Repeatable Read（可重复读）
+这是MySQL的默认事务隔离级别，它确保同一事务的多个实例在并发读取数据时，会看到同样的数据行。不过理论上，这会导致另一个棘手的问题：幻读 （Phantom Read）。简单的说，幻读指当用户读取某一范围的数据行时，另一个事务又在该范围内插入了新行，当用户再读取该范围的数据行时，会发现有新的“幻影” 行。InnoDB和Falcon存储引擎通过多版本并发控制（MVCC，Multiversion Concurrency Control）机制解决了该问题（mysql彻底解决了幻读问题？请往下看）。
+
+Serializable（可串行化）
+这是最高的隔离级别，它强制事务都是串行执行的，使之不可能相互冲突，从而解决幻读问题。换言之，它是在每个读的数据行上加上共享锁。在这个级别，可能导致大量的超时现象和锁竞争。
+
+事务隔离级别	               脏读	不可重复读  幻读
+读未提交（read-uncommitted）	是	是	是
+不可重复读（read-committed）	否	是	是
+可重复读（repeatable-read）	否	否	是
+串行化（serializable）	    否	否	否
+在MySQL的众多存储引擎中，只有InnoDB支持事务，所有这里说的事务隔离级别指的是InnoDB下的事务隔离级别。
+
+# MySQL如何实现可重复读：https://blog.csdn.net/sanyuesan0000/article/details/90235335
+
 
 ## 12. 在高并发情况下，如何做到安全的修改同一行数据？
 要安全的修改同一行数据，就要保证一个线程在修改时其它线程无法更新这行记录。一般有悲观锁和乐观锁两种方案~

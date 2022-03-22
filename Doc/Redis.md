@@ -28,6 +28,14 @@ volatile-ttl: 回收在过期集合的键，并且优先回收存活时间（TTL
  
 # 8、一个字符串类型的值能存储最大容量是多少？
 512M
+
+# redis hash扩容机制
+渐进式rehash：
+1、redis字典（hash表）底层有两个数组，还有一个rehashidx用来控制rehash
+2、初始默认hash长度为4，当元素个数与hash表长度一致时，就发生扩容，hash长度变为原来的二倍
+3、redis中的hash则是执行的单步rehash的过程
+https://zhuanlan.zhihu.com/p/400625895
+
  
 # 9、为什么 Redis 需要把所有数据放到内存中？
 Redis 为了达到最快的读写速度将数据都读到内存中，并通过异步的方式将数据写入磁盘。所以 Redis 具有快速和数据持久化的特征。如果不将数据放在内存中，磁盘 I/O 速度为严重影响 Redis 的性能。在内存越来越便宜的今天，Redis 将会越来越受欢迎。<br>

@@ -135,15 +135,15 @@ SELECT a.* FROM employee a, (select id from employee where 条件 LIMIT 1000000,
 * 利用zookeeper生成唯一ID
 * MongoDB的ObjectId
 
-## 10. 事务的隔离级别有哪些？MySQL的默认隔离级别是什么？ (MVCC)
+# MVCC机制
+## 1. 事务的隔离级别有哪些？MySQL的默认隔离级别是什么？ (MVCC)
 * 读未提交（Read Uncommitted）
 * 读已提交（Read Committed）
 * 可重复读（Repeatable Read）
 * 串行化（Serializable）
 Mysql默认的事务隔离级别是可重复读(Repeatable Read)
 
-## 11. 什么是幻读，脏读，不可重复读呢？
-
+## 2. 什么是幻读，脏读，不可重复读呢？
 * 事务A、B交替执行，事务A被事务B干扰到了，因为事务A读取到事务B未提交的数据,这就是脏读
 * 在一个事务范围内，两个相同的查询，读取同一条记录，却返回了不同的数据，这就是不可重复读。
 * 事务A查询一个范围的结果集，另一个并发事务B往这个范围中插入/删除了数据，并静悄悄地提交，然后事务A再次查询相同的范围，两次读取得到的结果集不一样了，这就是幻读。
@@ -166,6 +166,18 @@ Serializable（可串行化）
 可重复读（repeatable-read）	否	否	是
 串行化（serializable）	    否	否	否
 在MySQL的众多存储引擎中，只有InnoDB支持事务，所有这里说的事务隔离级别指的是InnoDB下的事务隔离级别。
+
+
+## MySQl为什么数据都存在叶子节点上：
+为了一致性和节省存储空间： 已经维护了一套主键索引+数据的B+Tree结构，如果再有其他的非主键索引的话，索引的叶子节点存储的是主键，这是为了节省空间，因为继续存数据的话，那就会导致一份数据存了多份，空间占用就会翻倍
+
+
+
+## 90. Innodb的事务实现原理？
+* 原子性：是使用 undo log来实现的，如果事务执行过程中出错或者用户执行了rollback，系统通过undo log日志返回事务开始的状态。
+* 持久性：使用 redo log来实现，只要redo log日志持久化了，当系统崩溃，即可通过redo log把数据恢复。
+* 隔离性：通过锁以及MVCC,使事务相互隔离开。
+* 一致性：通过回滚、恢复，以及并发情况下的隔离性，从而实现一致性。
 
 # MySQL如何实现可重复读：https://blog.csdn.net/sanyuesan0000/article/details/90235335
 通过next-key锁处理。next-key是record locks(索引加锁/行锁) 和 gap locks(间隙锁

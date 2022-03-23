@@ -860,9 +860,18 @@ select * from b , (select tid from a limit 50000,200) a where b.id = a .tid;
 
 ## 102 
 我排查死锁的一般步骤是酱紫的：
-*	查看死锁日志show engine innodb status;
-*	找出死锁Sql
-*	分析sql加锁情况
-*	模拟死锁案发
-*	分析死锁日志
-*	分析死锁结果
+* 查看死锁日志show engine innodb status;
+* 找出死锁Sql
+* 分析sql加锁情况
+* 模拟死锁案发
+* 分析死锁日志
+* 分析死锁结果
+
+## Mongo DB高可用方案：
+https://mongoing.com/archives/78417
+1. Sharding hash方法： range shard && hash shard
+2. 为什么要抽象chunk 的语义？
+3. 高可用架构
+   Master-Slave 模式  ： 手动
+   Replica Set 副本集模式  ： Primary， Secondary，Arbiter 自动切换 && 心跳模式 
+   Sharding 模式： 代理层：mongos 配置中心：副本集群（mongod）  数据层：Shard 集群

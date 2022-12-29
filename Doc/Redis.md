@@ -278,11 +278,10 @@ redis中的string有一些是直接使用C语言的字符串。但是在redis中
 C语言string：主要使用在一些无序对字符串进行修改的地方，比如说作为key、打印日志
 SDS：SDS是redis中默认字符串表示。几乎用于所有需要使用字符串操作的地方，包括AOF缓冲区等模块。
 
+完整5种介绍：https://juejin.cn/post/6844903936520880135
 String：https://segmentfault.com/a/1190000018507998
 List：https://segmentfault.com/a/1190000018537172
 Hash：https://segmentfault.com/a/1190000018590396
 Zset：https://marticles.github.io/2019/03/19/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Redis-Zset%E5%8E%9F%E7%90%86/
 
-完整5种介绍：
-https://i6448038.github.io/2019/12/01/redis-data-struct/  
-https://juejin.cn/post/6844903936520880135
+

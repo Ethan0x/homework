@@ -12,4 +12,10 @@ https://learn.microsoft.com/zh-cn/training/modules/go-variables-functions-packag
 ###  Go 按值传递参数
 1. Go 是“按值传递”编程语言。 每次向函数传递值时，Go 都会使用该值并创建本地副本（内存中的新变量）。 在函数中对该变量所做的更改都不会影响你向函数发送的更改。
 
-
+## Tips
+1. go: cannot find main module, but found .git/config in /Users/kook/Zhihu/go/src/git.in.zhihu.com/Github/homework
+   to create a module there, run:
+   cd ../.. && go mod init
+2. go: creating new go.mod: module git.in.zhihu.com/Github/homework/GoPlayground
+   go: to add module requirements and sums:
+   go mod tidy

@@ -65,6 +65,7 @@ $ awk -F ':' '{if ($1 > "m") print $1}' demo.txt
 6. 去重计数:
 ```shell
     cat ./utils/ip.txt| awk -F ' '  '{print $1}' | sort | uniq -c
+    # 去重（uniq）前要排序（sort）
 ```
 7. 按首列数字倒叙排列输出：
 ```shell

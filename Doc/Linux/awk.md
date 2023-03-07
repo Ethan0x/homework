@@ -48,13 +48,40 @@ $ awk -F ':' '{if ($1 > "m") print $1}' demo.txt
     cat utils/top.txt | awk '{printf "%-8s %-8s %-8s %-18s\n",NR, $1, $2, $8}'
     // 其中，%-8s 用过c语言输出的一定很眼熟，另外看到一个新的东西 NR，更多命令参考如下表格
 ```
-![awk命令](../utils/awk-1.png )
+![awk命令](../../utils/awk-1.png )
 
 3. 去掉第一行，只输出cpu消耗大于0的
 ```
     cat utils/top.txt | awk 'NR>1 && $9>0 {printf "%-8s %-8s %-18s\n",$1,$9,$12}'
 ```
+4. 仅输出ip
+```shell
+    cat ./utils/ip.txt| awk '{print $1}'
+```
+5. 按字符串规则排序：
+```shell
+    cat ./utils/ip.txt| awk '{print $1}' | sort
+```
+6. 去重计数:
+```shell
+    cat ./utils/ip.txt| awk -F ' '  '{print $1}' | sort | uniq -c
+```
+7. 按首列数字倒叙排列输出：
+```shell
+   cat ./utils/ip.txt| awk -F ' ' '{print $1}' | sort | uniq -c | sort -nr
+   # sort -n表示计数从小到大输出 sort -r表示倒序输出
+```
+8. 取对应行数：
+```shell
+   cat ./utils/ip.txt| awk -F ' ' '{print $1}' | sort | uniq -c | sort -nr | head -n 2
+```
+9. 另一种方式：
+```shell
+    cat ./utils/ip.txt | awk '{a[$1]++}END{for(i in a) print a[i],i}'|sort -nr|head -n 2
+```
+
 
 ### 参考
 1. [awk 使用教程 - 通读篇（30分钟入门）](https://cloud.tencent.com/developer/article/1159061#:~:text=awk%E6%98%AF%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A8%8B,%E6%98%AF%E4%BD%9C%E4%B8%BA%E8%84%9A%E6%9C%AC%E6%9D%A5%E4%BD%BF%E7%94%A8%E3%80%82)
 2. [30 Examples for Awk Command in Text Processing](https://likegeeks.com/awk-command/)
+3. [日志处理cat、awk、sort、uniq、head多命令使用](https://www.jianshu.com/p/e3a375609e83)

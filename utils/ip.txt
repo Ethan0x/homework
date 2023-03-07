@@ -1,0 +1,10 @@
+210.242.125.35 adwords.google.com
+212.188.10.167 www.google.com
+193.192.250.158 images-pos-opensocial.googleusercontent.com
+193.192.250.158 clients4.google.com
+222.255.120.42 google.com
+222.255.120.42 apis.google.com
+193.192.250.158 clients2.google.com
+193.192.250.158 clients3.google.com
+64.233.181.49 mts0.google.com
+64.233.181.49 maps.gstatic.com

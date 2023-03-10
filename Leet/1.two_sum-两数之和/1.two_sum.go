@@ -1,3 +1,5 @@
+package main
+
 // O(n^2)
 func twoSum(nums []int, target int) []int {
 	var result = make([]int, 2)
@@ -11,8 +13,7 @@ func twoSum(nums []int, target int) []int {
 	return result
 }
 
-// O(n)
-func twoSum(nums []int, target int) []int {
+func twoSum2(nums []int, target int) []int {
 	hm := map[int]int{}
 	for i := 0; i < len(nums); i++ {
 		v := nums[i]

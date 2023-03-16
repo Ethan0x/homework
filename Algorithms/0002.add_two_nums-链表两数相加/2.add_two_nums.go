@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package problem0002
 
 // Definition for singly-linked list.
 type ListNode struct {
@@ -41,6 +39,30 @@ func addTwoNumbers(l1, l2 *ListNode) (head *ListNode) {
 	return
 }
 
+func addTwo(l1, l2 *ListNode) *ListNode {
+	head := &ListNode{}
+	cur := head
+	carry := 0
+
+	for l1 != nil || l2 != nil || carry > 0 {
+		sum := carry
+
+		if l1 != nil {
+			sum += l1.Val
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			sum += l2.Val
+			l2 = l2.Next
+		}
+
+		carry = sum / 10
+		cur.Next = &ListNode{Val: sum % 10}
+		cur = cur.Next
+	}
+	return head.Next
+}
+
 /*
 	test case
 	Input :
@@ -50,33 +72,3 @@ func addTwoNumbers(l1, l2 *ListNode) (head *ListNode) {
 	Output:
 	[7,0,8]
 */
-
-// 初始化
-func New() *ListNode {
-	return &ListNode{0, nil}
-}
-
-// 遍历输出
-func (head *ListNode) Traverse() {
-	point := head
-	fmt.Println("--------start----------")
-	for nil != point {
-		fmt.Println(point.Val)
-		point = point.Next
-	}
-	fmt.Println("--------end----------")
-}
-
-// 插入
-func (head *ListNode) Insert(val int) {
-	p := head
-	for p.Next != nil {
-		p = p.Next // 位移至尾节点
-	}
-	s := &ListNode{Val: val}
-	p.Next = s
-	if p.Val == 0 { // 插入时发现首节点为空时前移
-		p.Val = p.Next.Val
-		p.Next = p.Next.Next
-	}
-}

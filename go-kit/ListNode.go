@@ -1,8 +1,6 @@
 package kit
 
-import (
-	"fmt"
-)
+import "fmt"
 
 // ListNode 是链接节点
 // 这个不能复制到*_test.go文件中。会导致Travis失败
@@ -15,10 +13,9 @@ type ListNode struct {
 func List2Ints(head *ListNode) []int {
 	// 链条深度限制，链条深度超出此限制，会 panic
 	limit := 100
-
 	times := 0
 
-	res := []int{}
+	var res []int
 	for head != nil {
 		times++
 		if times > limit {
@@ -75,4 +72,34 @@ func Ints2ListWithCycle(nums []int, pos int) *ListNode {
 	}
 	tail.Next = c
 	return head
+}
+
+// 初始化
+func New() *ListNode {
+	return &ListNode{0, nil}
+}
+
+// 遍历输出
+func (head *ListNode) Traverse() {
+	point := head
+	fmt.Println("--------start----------")
+	for nil != point {
+		fmt.Println(point.Val)
+		point = point.Next
+	}
+	fmt.Println("--------end----------")
+}
+
+// 插入
+func (head *ListNode) Insert(val int) {
+	p := head
+	for p.Next != nil {
+		p = p.Next // 位移至尾节点
+	}
+	s := &ListNode{Val: val}
+	p.Next = s
+	if p.Val == 0 { // 插入时发现首节点为空时前移
+		p.Val = p.Next.Val
+		p.Next = p.Next.Next
+	}
 }
